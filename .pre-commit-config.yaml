@@ -1,0 +1,46 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        verbose: true
+        exclude: '.*/migrations/.*'
+      - id: end-of-file-fixer
+        verbose: true
+        exclude: '.*/migrations/.*'
+      - id: check-yaml
+        verbose: true
+        exclude: '.*/migrations/.*'
+      - id: check-added-large-files
+        verbose: true
+        exclude: '.*/migrations/.*'
+      - id: check-json
+        verbose: true
+        exclude: '.*/migrations/.*'
+      - id: check-toml
+        verbose: true
+        exclude: '.*/migrations/.*'
+      - id: check-merge-conflict
+        verbose: true
+        exclude: '.*/migrations/.*'
+      - id: detect-private-key
+        verbose: true
+        exclude: '.*/migrations/.*'
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.7
+    hooks:
+
+      - id: ruff-check
+        args: [--fix, --show-fixes]
+        verbose: true
+        exclude: '.*/migrations/.*'
+
+      - id: ruff-format
+        args: [--diff, --check]
+        verbose: true
+        exclude: '.*/migrations/.*'
+
+      - id: ruff-format
+        verbose: true
+        exclude: '.*/migrations/.*'
