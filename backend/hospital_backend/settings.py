@@ -20,11 +20,11 @@ from dotenv import load_dotenv
 # Base / Paths
 # ------------------------------
 
-# Load environment variable
-load_dotenv(".env.development")
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variable
+load_dotenv(BASE_DIR / ".env.development")
 
 # ------------------------------
 # Environment & Secrets
@@ -54,11 +54,13 @@ INSTALLED_APPS = [
     # Library
     "rest_framework",
     "corsheaders",
+    "django_extensions",
     # Self defined app
+    "accounts",
+    "clinical",
 ]
 
-# TODO: Uncomment
-# AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "accounts.User"
 
 # ------------------------------
 # Middleware
@@ -103,6 +105,7 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 # ------------------------------
+DB_TIMEOUT = 5
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -111,6 +114,12 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
+        "OPTIONS": {
+            "connect_timeout": DB_TIMEOUT,
+        },
+        "TEST": {
+            "NAME": "test_db",
+        },
     }
 }
 
@@ -165,9 +174,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
-        # TODO: Remove AllowAny
-        "rest_framework.permissions.AllowAny",
-        # "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.IsAuthenticated",
     ],
     # Pagination
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
@@ -180,6 +187,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 # ------------------------------
