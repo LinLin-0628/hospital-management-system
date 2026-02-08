@@ -1,5 +1,8 @@
 from datetime import date
 
+from django.contrib.auth.password_validation import (
+    validate_password as django_validate_password,
+)
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.validators import RegexValidator
 from rest_framework import serializers
@@ -185,8 +188,7 @@ class UserNestedWriteSerializer(serializers.ModelSerializer):
         return value
 
     def validate_password(self, value):
-        # TODO: Uncomment
-        # validate_password(value)
+        django_validate_password(value)
         return value
 
     def validate(self, attrs):

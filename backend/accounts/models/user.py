@@ -33,8 +33,6 @@ class User(AbstractUser):
         max_length=10, choices=Gender.choices, default=Gender.UNKNOWN
     )
 
-    # TODO: Add constraint for unique username
-
     def clean(self):
         # Trim and normalize username
         if self.username:
