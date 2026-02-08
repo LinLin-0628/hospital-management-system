@@ -7,10 +7,13 @@ requires-python = ">=3.13"
 dependencies = [
     "django>=6.0.1",
     "django-cors-headers>=4.9.0",
+    "django-extensions>=4.1",
     "djangorestframework>=3.16.1",
     "djangorestframework-simplejwt>=5.5.1",
     "psycopg[binary]>=3.3.2",
+    "python-dateutil>=2.9.0.post0",
     "python-dotenv>=1.2.1",
+    "uuid",
 ]
 
 [dependency-groups]
@@ -19,6 +22,16 @@ format-and-lint = [
 ]
 other = [
     "pre-commit>=4.5.1",
+]
+test = [
+    "factory-boy>=3.3.3",
+    "freezegun>=1.5.5",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "pytest-django>=4.11.1",
+    "pytest-dotenv>=0.5.2",
+    "pytest-env>=1.2.0",
+    "pytest-mock>=3.15.1",
 ]
 
 [tool.ruff]
@@ -49,3 +62,28 @@ convention = "google"
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "hospital_backend.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+#env_files = [".env.test"]
+pythonpath = ["."]
+addopts = [
+  "--strict-config",
+  "--strict-markers",
+  "--tb=short"
+]
+markers = [
+  "unit: fast isolated tests",
+  "integration: tests with DB or external services",
+  "e2e: full end-to-end tests",
+]
+
+
+[tool.coverage.run]
+omit = [
+    "tests/*",
+    "*/migrations/*",
+    "__init__.py",
+]
