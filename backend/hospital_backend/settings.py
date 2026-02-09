@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     # Self defined app
     "accounts",
     "clinical",
+    "appointments",
 ]
 
 AUTH_USER_MODEL = "accounts.User"

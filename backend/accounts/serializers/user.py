@@ -233,3 +233,15 @@ class UserNestedWriteSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class UserShortReadSerializer(serializers.ModelSerializer):
+    """
+    Short version of user for nested usage in other serializers
+    (e.g., Appointment read serializer).
+    Includes basic information only.
+    """
+
+    class Meta:
+        model = User
+        fields = ["id", "username", "first_name", "last_name", "role"]
